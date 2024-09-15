@@ -1,0 +1,89 @@
+class Product:
+    def __init__(self, name:str, store:str, price: float):
+        self.__name = name
+        self.__store = store
+        self.__price = price
+
+
+    def get_name(self)->str:
+        return self.__name
+    def get_store(self)->str:
+        return self.__store
+    def get_price(self)->float:
+        return float(self.__price)
+    def __add__(self, other):
+        if isinstance(other, Product):
+            return self.__price+other.__price
+        elif isinstance(other, (float, int)):
+            return self.__price +other
+        else:
+            raise TypeError (f'unsupported operand type(s) for +: "Product" and "{type(other)}"')
+    def __str__(self):
+        return f"{self.__name} ({self.__store}) - {self.__price} руб."
+class Sklad:
+    def __init__(self):
+        self.__products = []
+
+    def summa_price(self)->float:
+        summary = 0
+        for p in self.__products:
+            summary = p + summary
+        return summary
+    def add_product(self, product):
+        self.__products.append(product)
+
+    def find_product_by_index(self, index):
+        return self.__products[index]
+
+    def find_product_by_name(self, name):
+        for product in self.__products:
+            if product.get_name() == name:
+                return product
+        return None
+
+    def sort_by_name(self):
+        self.__products.sort(key=lambda x: x.get_name())
+    def sort_by_store(self):
+        self.__products.sort(key=lambda x: x.get_store())
+    def sort_by_price(self):
+        self.__products.sort(key=lambda x: x.get_price())
+
+
+    def __str__(self):
+        output = ""
+        for product in self.__products:
+            output += str(product) + "\n"
+        return output
+
+    def __add__(self, other):
+        result = Sklad()
+        for product in self.__products:
+            result.add_product(product)
+        for product in other.__products:
+            result.add_product(product)
+        return result
+
+product1 = Product("Яблоки", "i-store", 50)
+product2 = Product("Молоко", "Магазин 2", 80)
+product3 = Product("Хлеб", "Магазин 3", 30)
+
+sklad = Sklad()
+sklad.add_product(product1)
+sklad.add_product(product2)
+sklad.add_product(product3)
+print(sklad)
+print(sklad.find_product_by_index(2))
+print(sklad.find_product_by_name("Яблоки"), '\n')
+
+sklad.sort_by_name()
+print(f"Сортировка по названию наименованию: \n{sklad}")
+
+sklad.sort_by_store()
+print(f"Сортировка по названию магазину: \n{sklad}")
+
+sklad.sort_by_price()
+print(f"Сортировка по цене: \n{sklad}")
+
+new_sklad = sklad + sklad
+
+print(f'Cложение двух складов: {new_sklad.summa_price()}')
