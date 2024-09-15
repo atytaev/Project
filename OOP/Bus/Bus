@@ -1,0 +1,63 @@
+class Bus:
+    def __init__(self, speed, max_places, max_speed):
+        self.speed = speed
+        self.max_places = max_places
+        self.max_speed = max_speed
+        self.surnames = []
+        self.has_empty_seats = True
+        self.seats = {i: None for i in range(1, max_places + 1)}
+
+    def board (self, *surnames):
+        for surname in surnames:
+            if len(self.surnames) < self.max_places:
+                self.surnames.append(surname)
+                for seat, name in self.seats.items():
+                    if name is None:
+                        self.seats[seat] = surname
+                        break
+                print(f'{surname} сел в автобус')
+            else:
+                print('Автобус переполнен')
+        self.has_empty_seats = len(self.surnames) < self.max_places
+
+    def exit (self, *surnames):
+        for surname in surnames:
+            if surname in self.surnames:
+                self.surnames.remove(surname)
+                for seat, name in self.seats.items():
+                    if name == surname:
+                        self.seats[seat] = None
+                        break
+                print(f'{surname} вышел с автобуса')
+        self.has_empty_seats = len(self.surnames) < self.max_places
+
+    def increase_speed(self, speed_incrase):
+        self.speed = min(self.speed + speed_incrase,self.max_speed)
+
+    def decrease_speed(self, speed_decrase):
+        self.speed = max(self.speed + speed_decrase, 0)
+
+    def __contains__(self, surname):
+        return surname in self.surnames
+    def __iadd__(self, surname):
+        self.board(surname)
+        return self
+    def __isub__(self, surname):
+        self.exit(surname)
+        return self
+
+bus = Bus(speed=50, max_places=50, max_speed=90)
+bus.board('Alice', 'Bob', 'David', 'Max')
+
+print(bus.surnames)
+print(bus.has_empty_seats)
+
+bus -= 'Bob'
+bus += 'Mafrodi'
+bus += 'Al Capone'
+print(bus.seats)
+print(bus.surnames)
+
+bus.increase_speed(50)
+bus.decrease_speed(25)
+print(bus.speed)
