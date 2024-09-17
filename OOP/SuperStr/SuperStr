@@ -1,0 +1,17 @@
+class SuperStr(str):
+    def is_repeatance(self, text):
+        if len(self) % len(text) == 0:
+            return text * (len(self) // len(text)) == self
+        else:
+            return False
+
+    def is_palindrom(self):
+        s = self.lower()
+        return s == s[::-1]
+
+s = SuperStr("axaxax")
+s2 = SuperStr("axa")
+print(s.is_repeatance("ax"))
+print(s.is_repeatance("xa"))
+print(s.is_palindrom())
+print(s2.is_palindrom())
