@@ -1,0 +1,15 @@
+class Soda:
+    def __init__(self, taste=None):
+        self.taste = taste
+
+    def __str__(self):
+        result = self.taste
+        if result:
+            return f'У вас газировка со вкусом {self.taste}'
+        else:
+            return f'У вас обычная газировка'
+
+soda = Soda()
+print(soda)
+soda1 = Soda('Бука')
+print(soda1)
