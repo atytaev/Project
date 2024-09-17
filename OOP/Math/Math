@@ -1,0 +1,30 @@
+class Math():
+    def __init__(self):
+        pass
+    def add(self,a,b):
+        return a+b
+    def sub(self,a,b):
+        return a-b
+    def mul(self,a,b):
+        return a*b
+    def div(self,a,b):
+        return a/b
+math=Math()
+operator = input('Выберите действие:')
+while operator != '0':
+    try:
+        if operator == '+':
+            print(f'Сумма: {math.add(int(input('Число 1:')),int(input('Число 2:')))}')
+        if operator == '-':
+            print(f'Разница: {math.sub(int(input('Число 1:')),int(input('Число 2:')))}')
+        if operator == '*':
+            print(f'Произведение: {math.mul(int(input('Число 1:')),int(input('Число 2:')))}')
+        if operator == '/':
+            print(f'Деление: {math.div(int(input('Число 1:')),int(input('Число 2:')))}')
+    except ZeroDivisionError:
+        print('Делить на 0 нельзя!')
+    except ValueError:
+        print('Вводите только числа!')
+
+    operator = input('Выберите действие: ')
+print('Программа завершена.')
