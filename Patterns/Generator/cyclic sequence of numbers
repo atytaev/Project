@@ -1,0 +1,18 @@
+Реализовать программу для бесконечной циклической
+последовательности чисел (например, 1-2-3-1-2-3-1-2...).
+Последовательность реализовать с помощью генераторной
+функции, количество чисел для вывода задаётся
+пользователем с клавиатуры.
+
+
+def cyclic_generator():
+    sequence = [1, 2, 3]
+    index = 0
+    while True:
+        yield sequence[index]
+        index = (index + 1) % len(sequence)
+
+count = int(input("Введите количество чисел для вывода: "))
+generator = cyclic_generator()
+for _ in range(count):
+    print(next(generator))
