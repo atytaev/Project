@@ -1,0 +1,63 @@
+● Создайте класс Calculator, который использует разные
+стратегии для выполнения математических операций.
+● Создайте несколько классов, каждый реализует
+определенную стратегию математической операции,
+например, Addition, Subtraction, Multiplication, Division.
+Каждый класс должен содержать метод execute, который
+принимает два числа и выполняет соответствующую
+операцию.
+● Calculator должен иметь метод set_strategy, который
+устанавливает текущую стратегию, и метод calculate,
+который выполняет операцию с помощью текущей стратегии.
+
+
+from abc import ABC, abstractmethod
+
+class Strategy(ABC):
+    @abstractmethod
+    def execute(self, num1, num2):
+        pass
+
+class Addition(Strategy):
+    def execute(self, num1, num2):
+        return num1 + num2
+
+class Subtraction(Strategy):
+    def execute(self, num1, num2):
+        return num1 - num2
+
+class Multiplication(Strategy):
+    def execute(self, num1, num2):
+        return num1 * num2
+
+class Division(Strategy):
+    def execute(self, num1, num2):
+        if num2 == 0:
+            raise ZeroDivisionError("Division by zero")
+        return num1 / num2
+
+class Calculator:
+    def __init__(self):
+        self.strategy = None
+
+    def set_strategy(self, strategy):
+        self.strategy = strategy
+
+    def calculate(self, num1, num2):
+        if self.strategy is None:
+            raise ValueError("Strategy not set")
+        return self.strategy.execute(num1, num2)
+
+calculator = Calculator()
+
+calculator.set_strategy(Addition())
+print(calculator.calculate(11,1))
+
+calculator.set_strategy(Subtraction())
+print(calculator.calculate(22, 31))
+
+calculator.set_strategy(Multiplication())
+print(calculator.calculate(8, 9))
+
+calculator.set_strategy(Division())
+print(calculator.calculate(10, 4))
