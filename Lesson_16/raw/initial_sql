@@ -1,0 +1,31 @@
+ CREATE TABLE IF NOT EXISTS Events (
+            id SERIAL PRIMARY KEY,
+            name VARCHAR(255) NOT NULL,
+            description TEXT,
+            venue_id INT NOT NULL,
+            date DATE NOT NULL,
+            time TIME NOT NULL,
+            price DECIMAL(10,2) NOT NULL,
+            FOREIGN KEY (venue_id) REFERENCES Venues(id)
+        );
+
+
+
+ CREATE TABLE IF NOT EXISTS Venues (
+            id SERIAL PRIMARY KEY,
+            name VARCHAR(255) NOT NULL,
+            address VARCHAR(255) NOT NULL,
+            capacity INT NOT NULL
+        );
+
+
+CREATE TABLE IF NOT EXISTS Tickets (
+            id SERIAL PRIMARY KEY,
+            event_id INT NOT NULL,
+            status VARCHAR(20) DEFAULT 'доступен' NOT NULL,
+            price DECIMAL(10,2) NOT NULL,
+            FOREIGN KEY (event_id) REFERENCES Events(id)
+        );
+
+
+
